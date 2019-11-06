@@ -1,6 +1,7 @@
 // schema {
 import {schema as baseSchema} from "prosemirror-schema-basic"
 import {Schema} from "prosemirror-model"
+import {GapCursor} from "prosemirror-gapcursor"
 
 let baseNodes = baseSchema.spec.nodes
 const schema = new Schema({
@@ -119,7 +120,13 @@ class CodeBlockView {
       return CodeMirror.Pass
     this.view.focus()
     let targetPos = this.getPos() + (dir < 0 ? 0 : this.node.nodeSize)
-    let selection = Selection.near(this.view.state.doc.resolve(targetPos), dir)
+    let $targetPos = this.view.state.doc.resolve(targetPos)
+    console.log($targetPos)
+    let targetNode = dir < 0 ? $targetPos.nodeBefore : $targetPos.nodeAfter
+    console.log(targetNode, $targetPos, $targetPos.nodeAfter)
+    let selection = (!targetNode || targetNode.type.name == "code_block") ?
+      new GapCursor($targetPos) :
+      Selection.near($targetPos, dir)
     this.view.dispatch(this.view.state.tr.setSelection(selection).scrollIntoView())
     this.view.focus()
   }

@@ -9,6 +9,10 @@ provides syntax highlighting, auto-indentation, and similar.</p>
 function max(a, b) {
   return a > b ? a : b
 }</pre>
+<pre>
+function max(a, b) {
+  return a > b ? a : b
+}</pre>
 <p>The content of the code editor is kept in sync with the content of
 the code block in the rich text editor, so that it is as if you're
 directly editing the outer document, using a more convenient
@@ -21,5 +25,8 @@ interface.</p>
     height: auto;
   }
   .CodeMirror pre { white-space: pre !important }
+  .CodeMirror + .CodeMirror {
+    margin-top: 1rem;
+  }
 </style>
 <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
